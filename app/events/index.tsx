@@ -3,19 +3,13 @@ import { router } from 'expo-router';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import EventRow from '../../src/components/EventRow';
 import { useEvents } from '../../src/hooks/useEvents';
+import { useSavedIds } from '../../src/hooks/useSavedIds';
 
 export default function EventsScreen() {
   const { data, isPending, isError, error, refetch, isRefetching } = useEvents();
-  const [savedIds, setSavedIds] = useState<number[]>([]);
+  const { savedIds, toggleSaved } = useSavedIds();
   const [query, setQuery] = useState('');
 
-  function toggleSaved(id: number) {
-    if (savedIds.includes(id)) {
-      setSavedIds(savedIds.filter((savedId) => savedId !== id));
-    } else {
-      setSavedIds([...savedIds, id]);
-    }
-  }
 
   if (isPending) {
     return (
