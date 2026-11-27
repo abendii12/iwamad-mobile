@@ -1,5 +1,13 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import ChatPanel from '../../src/components/ChatPanel';
 import HolidayNote from '../../src/components/HolidayNote';
 import { useEvents } from '../../src/hooks/useEvents';
 
@@ -43,18 +51,30 @@ export default function EventDetailsScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
       <Stack.Screen options={{ title: event.title }} />
       <Text style={styles.title}>{event.title}</Text>
       <Text style={styles.text}>Date: {event.date}</Text>
       <HolidayNote date={event.date} />
       <Text style={styles.text}>Place: {event.place}</Text>
       <Text style={styles.text}>Seats: {event.seats}</Text>
-    </View>
+      <ChatPanel eventId={event.id} eventTitle={event.title} />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  content: {
+    padding: 24,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
